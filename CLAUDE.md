@@ -26,6 +26,12 @@ Use the Task tool with these specialized subagents for appropriate tasks:
 - **ALWAYS use Playwright MCP tools** (`mcp__playwright__*`) for browser testing
   - Test against: `http://localhost:3000` (frontend), `http://localhost:8001` (API)
 
+## Commits
+- **Use Conventional Commits**: `<type>(<optional scope>): <description>`
+  - Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`
+  - Imperative, lowercase description with no trailing period (e.g. `feat(restocking): add purchase order modal`)
+  - Breaking changes: add `!` after the type/scope and a `BREAKING CHANGE:` footer
+
 ## Stack
 - **Frontend**: Vue 3 + Composition API + Vite (port 3000)
 - **Backend**: Python FastAPI (port 8001)
@@ -41,6 +47,18 @@ uv run python main.py
 # Frontend
 cd client
 npm install && npm run dev
+```
+
+## Tests & Lint (also run in CI: `.github/workflows/ci.yml`)
+
+```bash
+# Backend (from server/)
+uv sync
+uv run ruff check . ../tests && uv run ruff format --check . ../tests
+uv run pytest -c ../tests/pytest.ini ../tests/backend
+
+# Frontend (from client/)
+npm run lint && npm run format:check && npm test && npm run build
 ```
 
 ## Key Patterns

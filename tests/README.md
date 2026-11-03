@@ -10,7 +10,6 @@ tests/
 ├── backend/            # Backend API tests
 │   ├── conftest.py     # Test fixtures and configuration
 │   ├── test_inventory.py      # Inventory endpoint tests (10 tests)
-│   ├── test_orders.py         # Orders endpoint tests (15 tests)
 │   ├── test_dashboard.py      # Dashboard endpoint tests (13 tests)
 │   └── test_misc_endpoints.py # Demand, backlog, spending tests (13 tests)
 └── README.md           # This file
@@ -21,31 +20,31 @@ tests/
 ### Run all tests
 ```bash
 cd tests
-uv run pytest -v
+uv run --project ../server pytest -v
 ```
 
 ### Run specific test file
 ```bash
 cd tests
-uv run pytest backend/test_inventory.py -v
+uv run --project ../server pytest backend/test_inventory.py -v
 ```
 
 ### Run specific test class
 ```bash
 cd tests
-uv run pytest backend/test_inventory.py::TestInventoryEndpoints -v
+uv run --project ../server pytest backend/test_inventory.py::TestInventoryEndpoints -v
 ```
 
 ### Run specific test
 ```bash
 cd tests
-uv run pytest backend/test_inventory.py::TestInventoryEndpoints::test_get_all_inventory -v
+uv run --project ../server pytest backend/test_inventory.py::TestInventoryEndpoints::test_get_all_inventory -v
 ```
 
 ### Run with coverage (requires pytest-cov)
 ```bash
 cd tests
-uv run pytest --cov=../server --cov-report=html
+uv run --project ../server pytest --cov=../server --cov-report=html
 ```
 
 ## Test Coverage

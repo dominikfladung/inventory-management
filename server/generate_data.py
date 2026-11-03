@@ -1,8 +1,10 @@
 """
 Script to generate sample data spread across all months of 2025
 """
+
 import json
 import random
+from collections import defaultdict
 from datetime import datetime, timedelta
 
 # Product catalog
@@ -11,7 +13,12 @@ products = [
     {"sku": "WDG-002", "name": "Industrial Widget Type B", "category": "Widgets", "price": 29.99},
     {"sku": "WDG-003", "name": "Industrial Widget Type C", "category": "Widgets", "price": 34.50},
     {"sku": "BRG-102", "name": "Steel Bearing Assembly", "category": "Components", "price": 89.50},
-    {"sku": "BRG-103", "name": "Ceramic Bearing Assembly", "category": "Components", "price": 125.00},
+    {
+        "sku": "BRG-103",
+        "name": "Ceramic Bearing Assembly",
+        "category": "Components",
+        "price": 125.00,
+    },
     {"sku": "GSK-203", "name": "High-Temperature Gasket", "category": "Components", "price": 12.75},
     {"sku": "GSK-204", "name": "Standard Gasket", "category": "Components", "price": 8.50},
     {"sku": "GSK-205", "name": "Heavy Duty Gasket", "category": "Components", "price": 15.99},
@@ -27,16 +34,36 @@ products = [
 ]
 
 customers = [
-    "Acme Manufacturing Corp", "TechBuild Industries", "Global Parts Ltd",
-    "Precision Tools Inc", "Industrial Solutions Inc", "MegaCorp Industries",
-    "BuildTech Co", "FastAssembly Ltd", "Quality Parts LLC", "Superior Manufacturing",
-    "PrecisionWorks Inc", "Elite Systems Corp", "Advanced Components Inc",
-    "ProManufacturing LLC", "TechSolutions Group", "Innovative Parts Co",
-    "Premier Industries", "Dynamic Systems Ltd", "Quantum Manufacturing",
-    "Apex Engineering", "Titan Products Inc", "Vanguard Systems",
-    "Omega Manufacturing", "Fusion Industries", "Stellar Components Ltd",
-    "Nexus Engineering", "Cascade Manufacturing", "Horizon Technologies",
-    "Summit Parts Corp", "Velocity Industries"
+    "Acme Manufacturing Corp",
+    "TechBuild Industries",
+    "Global Parts Ltd",
+    "Precision Tools Inc",
+    "Industrial Solutions Inc",
+    "MegaCorp Industries",
+    "BuildTech Co",
+    "FastAssembly Ltd",
+    "Quality Parts LLC",
+    "Superior Manufacturing",
+    "PrecisionWorks Inc",
+    "Elite Systems Corp",
+    "Advanced Components Inc",
+    "ProManufacturing LLC",
+    "TechSolutions Group",
+    "Innovative Parts Co",
+    "Premier Industries",
+    "Dynamic Systems Ltd",
+    "Quantum Manufacturing",
+    "Apex Engineering",
+    "Titan Products Inc",
+    "Vanguard Systems",
+    "Omega Manufacturing",
+    "Fusion Industries",
+    "Stellar Components Ltd",
+    "Nexus Engineering",
+    "Cascade Manufacturing",
+    "Horizon Technologies",
+    "Summit Parts Corp",
+    "Velocity Industries",
 ]
 
 warehouses = ["A", "B", "C"]
@@ -87,12 +114,14 @@ for month in range(1, 13):  # Jan to Dec
             if primary_category is None:
                 primary_category = product["category"]
 
-            items.append({
-                "sku": product["sku"],
-                "name": product["name"],
-                "quantity": quantity,
-                "unit_price": product["price"]
-            })
+            items.append(
+                {
+                    "sku": product["sku"],
+                    "name": product["name"],
+                    "quantity": quantity,
+                    "unit_price": product["price"],
+                }
+            )
 
         warehouse = random.choice(warehouses)
 
@@ -106,7 +135,7 @@ for month in range(1, 13):  # Jan to Dec
             "category": primary_category,
             "order_date": order_date,
             "expected_delivery": expected_delivery.strftime("%Y-%m-%dT%H:%M:%S"),
-            "total_value": round(total_value, 2)
+            "total_value": round(total_value, 2),
         }
 
         if status == "Delivered" and month <= 10:
@@ -117,16 +146,15 @@ for month in range(1, 13):  # Jan to Dec
         order_id += 1
 
 # Save to file
-with open('data/orders.json', 'w') as f:
+with open("data/orders.json", "w") as f:
     json.dump(orders, f, indent=2)
 
 print(f"Generated {len(orders)} orders across 12 months of 2025")
 
 # Count orders per month
-from collections import defaultdict
 orders_per_month = defaultdict(int)
 for order in orders:
-    month = order['order_date'][5:7]
+    month = order["order_date"][5:7]
     orders_per_month[month] += 1
 
 print("\nOrders per month:")

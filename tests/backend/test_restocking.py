@@ -1,5 +1,7 @@
 """Tests for restocking endpoints"""
+
 import pytest
+
 from mock_data import submitted_orders
 
 

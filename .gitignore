@@ -53,3 +53,8 @@ logs/
 
 # Environment variables
 .env
+
+# Coverage
+coverage.xml
+htmlcov/
+.coverage

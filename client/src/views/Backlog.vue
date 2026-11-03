@@ -31,8 +31,8 @@
         <div class="card-header">
           <h3 class="card-title">Backlog Items</h3>
         </div>
-        <div v-if="backlogItems.length === 0" style="padding: 3rem; text-align: center;">
-          <p style="font-size: 1.125rem; color: #10b981; font-weight: 600;">
+        <div v-if="backlogItems.length === 0" style="padding: 3rem; text-align: center">
+          <p style="font-size: 1.125rem; color: #10b981; font-weight: 600">
             ✓ No backlog items - all orders can be fulfilled!
           </p>
         </div>
@@ -52,8 +52,12 @@
             </thead>
             <tbody>
               <tr v-for="item in backlogItems" :key="item.id">
-                <td><strong>{{ item.order_id }}</strong></td>
-                <td><strong>{{ item.item_sku }}</strong></td>
+                <td>
+                  <strong>{{ item.order_id }}</strong>
+                </td>
+                <td>
+                  <strong>{{ item.item_sku }}</strong>
+                </td>
                 <td>{{ item.item_name }}</td>
                 <td>{{ item.quantity_needed }}</td>
                 <td>{{ item.quantity_available }}</td>
@@ -104,8 +108,8 @@ export default {
       }
 
       // Get SKUs of items that match the filters
-      const validSkus = new Set(inventoryItems.value.map(item => item.sku))
-      return allBacklogItems.value.filter(b => validSkus.has(b.item_sku))
+      const validSkus = new Set(inventoryItems.value.map((item) => item.sku))
+      return allBacklogItems.value.filter((b) => validSkus.has(b.item_sku))
     })
 
     const loadBacklog = async () => {
@@ -131,7 +135,7 @@ export default {
     }
 
     const getBacklogByPriority = (priority) => {
-      return backlogItems.value.filter(item => item.priority === priority)
+      return backlogItems.value.filter((item) => item.priority === priority)
     }
 
     // Watch for filter changes and reload data

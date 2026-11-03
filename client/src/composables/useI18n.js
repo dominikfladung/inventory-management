@@ -96,8 +96,8 @@ export function useI18n() {
       // Handle city names
       const cityMap = {
         'San Francisco': 'サンフランシスコ',
-        'London': 'ロンドン',
-        'Tokyo': '東京'
+        London: 'ロンドン',
+        Tokyo: '東京'
       }
 
       if (cityMap[warehouseName]) {

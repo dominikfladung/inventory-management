@@ -27,9 +27,16 @@
               <span class="kpi-label">{{ t('dashboard.kpi.ordersFulfilled') }}</span>
             </div>
             <div class="kpi-value">{{ ordersData.fulfilled }}</div>
-            <div class="kpi-goal">{{ t('dashboard.kpi.goal') }}: {{ ordersData.goal }} ({{ calculatePercentage(ordersData.fulfilled, ordersData.goal) }}%)</div>
+            <div class="kpi-goal">
+              {{ t('dashboard.kpi.goal') }}: {{ ordersData.goal }} ({{
+                calculatePercentage(ordersData.fulfilled, ordersData.goal)
+              }}%)
+            </div>
             <div class="kpi-progress-bar">
-              <div class="kpi-progress" :style="{ width: calculatePercentage(ordersData.fulfilled, ordersData.goal) + '%' }"></div>
+              <div
+                class="kpi-progress"
+                :style="{ width: calculatePercentage(ordersData.fulfilled, ordersData.goal) + '%' }"
+              ></div>
             </div>
           </div>
 
@@ -38,20 +45,41 @@
               <span class="kpi-label">{{ t('dashboard.kpi.orderFillRate') }}</span>
             </div>
             <div class="kpi-value">{{ fillRate }}%</div>
-            <div class="kpi-goal">{{ t('dashboard.kpi.goal') }}: 95% ({{ fillRate - 95 > 0 ? '+' : '' }}{{ (fillRate - 95).toFixed(2) }}%)</div>
+            <div class="kpi-goal">
+              {{ t('dashboard.kpi.goal') }}: 95% ({{ fillRate - 95 > 0 ? '+' : ''
+              }}{{ (fillRate - 95).toFixed(2) }}%)
+            </div>
             <div class="kpi-progress-bar">
-              <div class="kpi-progress success" :style="{ width: (fillRate / 95 * 100) + '%' }"></div>
+              <div
+                class="kpi-progress success"
+                :style="{ width: (fillRate / 95) * 100 + '%' }"
+              ></div>
             </div>
           </div>
 
           <div class="kpi-card">
             <div class="kpi-header">
-              <span class="kpi-label">{{ t(selectedPeriod === 'all' ? 'dashboard.kpi.revenueYTD' : 'dashboard.kpi.revenueMTD') }}</span>
+              <span class="kpi-label">{{
+                t(
+                  selectedPeriod === 'all' ? 'dashboard.kpi.revenueYTD' : 'dashboard.kpi.revenueMTD'
+                )
+              }}</span>
             </div>
-            <div class="kpi-value">{{ formatCurrency(Math.round(summary.total_orders_value), selectedCurrency) }}</div>
-            <div class="kpi-goal">{{ t('dashboard.kpi.goal') }}: {{ formatCurrency(revenueGoal, selectedCurrency) }} ({{ summary.total_orders_value > revenueGoal ? '+' : '' }}{{ ((summary.total_orders_value / revenueGoal - 1) * 100).toFixed(1) }}%)</div>
+            <div class="kpi-value">
+              {{ formatCurrency(Math.round(summary.total_orders_value), selectedCurrency) }}
+            </div>
+            <div class="kpi-goal">
+              {{ t('dashboard.kpi.goal') }}: {{ formatCurrency(revenueGoal, selectedCurrency) }} ({{
+                summary.total_orders_value > revenueGoal ? '+' : ''
+              }}{{ ((summary.total_orders_value / revenueGoal - 1) * 100).toFixed(1) }}%)
+            </div>
             <div class="kpi-progress-bar">
-              <div class="kpi-progress" :style="{ width: Math.min((summary.total_orders_value / revenueGoal * 100), 100) + '%' }"></div>
+              <div
+                class="kpi-progress"
+                :style="{
+                  width: Math.min((summary.total_orders_value / revenueGoal) * 100, 100) + '%'
+                }"
+              ></div>
             </div>
           </div>
 
@@ -85,30 +113,75 @@
               <!-- Left: Donut Chart -->
               <div class="order-health-chart">
                 <svg viewBox="0 0 200 200" class="donut-svg-compact">
-                  <circle cx="100" cy="100" r="65" fill="none" stroke="#e2e8f0" stroke-width="25"/>
-                  <circle cx="100" cy="100" r="65" fill="none" stroke="#10b981" stroke-width="25"
+                  <circle cx="100" cy="100" r="65" fill="none" stroke="#e2e8f0" stroke-width="25" />
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="65"
+                    fill="none"
+                    stroke="#10b981"
+                    stroke-width="25"
                     :stroke-dasharray="`${getCircleSegment(statusData.delivered)} 408`"
-                    stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
-                  <circle cx="100" cy="100" r="65" fill="none" stroke="#3b82f6" stroke-width="25"
+                    stroke-dashoffset="0"
+                    transform="rotate(-90 100 100)"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="65"
+                    fill="none"
+                    stroke="#3b82f6"
+                    stroke-width="25"
                     :stroke-dasharray="`${getCircleSegment(statusData.shipped)} 408`"
                     :stroke-dashoffset="`-${getCircleSegment(statusData.delivered)}`"
-                    transform="rotate(-90 100 100)"/>
-                  <circle cx="100" cy="100" r="65" fill="none" stroke="#f59e0b" stroke-width="25"
+                    transform="rotate(-90 100 100)"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="65"
+                    fill="none"
+                    stroke="#f59e0b"
+                    stroke-width="25"
                     :stroke-dasharray="`${getCircleSegment(statusData.processing)} 408`"
                     :stroke-dashoffset="`-${getCircleSegment(statusData.delivered) + getCircleSegment(statusData.shipped)}`"
-                    transform="rotate(-90 100 100)"/>
-                  <circle cx="100" cy="100" r="65" fill="none" stroke="#ef4444" stroke-width="25"
+                    transform="rotate(-90 100 100)"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="65"
+                    fill="none"
+                    stroke="#ef4444"
+                    stroke-width="25"
                     :stroke-dasharray="`${getCircleSegment(statusData.backordered)} 408`"
                     :stroke-dashoffset="`-${getCircleSegment(statusData.delivered) + getCircleSegment(statusData.shipped) + getCircleSegment(statusData.processing)}`"
-                    transform="rotate(-90 100 100)"/>
-                  <text x="100" y="90" text-anchor="middle" class="donut-center-label">{{ t('dashboard.orderHealth.total') }}</text>
-                  <text x="100" y="120" text-anchor="middle" class="donut-center-value">{{ orderHealthMetrics.totalOrders }}</text>
+                    transform="rotate(-90 100 100)"
+                  />
+                  <text x="100" y="90" text-anchor="middle" class="donut-center-label">
+                    {{ t('dashboard.orderHealth.total') }}
+                  </text>
+                  <text x="100" y="120" text-anchor="middle" class="donut-center-value">
+                    {{ orderHealthMetrics.totalOrders }}
+                  </text>
                 </svg>
                 <div class="donut-legend-compact">
-                  <div class="legend-item-compact"><span class="legend-dot" style="background: #10b981"></span>{{ t('status.delivered') }}</div>
-                  <div class="legend-item-compact"><span class="legend-dot" style="background: #3b82f6"></span>{{ t('status.shipped') }}</div>
-                  <div class="legend-item-compact"><span class="legend-dot" style="background: #f59e0b"></span>{{ t('status.processing') }}</div>
-                  <div class="legend-item-compact"><span class="legend-dot" style="background: #ef4444"></span>{{ t('status.backordered') }}</div>
+                  <div class="legend-item-compact">
+                    <span class="legend-dot" style="background: #10b981"></span
+                    >{{ t('status.delivered') }}
+                  </div>
+                  <div class="legend-item-compact">
+                    <span class="legend-dot" style="background: #3b82f6"></span
+                    >{{ t('status.shipped') }}
+                  </div>
+                  <div class="legend-item-compact">
+                    <span class="legend-dot" style="background: #f59e0b"></span
+                    >{{ t('status.processing') }}
+                  </div>
+                  <div class="legend-item-compact">
+                    <span class="legend-dot" style="background: #ef4444"></span
+                    >{{ t('status.backordered') }}
+                  </div>
                 </div>
               </div>
 
@@ -116,21 +189,39 @@
               <div class="order-health-metrics">
                 <div class="health-metric">
                   <div class="health-metric-label">{{ t('dashboard.orderHealth.revenue') }}</div>
-                  <div class="health-metric-value">{{ formatCurrency(orderHealthMetrics.totalValue, selectedCurrency) }}</div>
+                  <div class="health-metric-value">
+                    {{ formatCurrency(orderHealthMetrics.totalValue, selectedCurrency) }}
+                  </div>
                 </div>
                 <div class="health-metric">
-                  <div class="health-metric-label">{{ t('dashboard.orderHealth.avgOrderValue') }}</div>
-                  <div class="health-metric-value">{{ formatCurrency(orderHealthMetrics.avgOrderValue, selectedCurrency) }}</div>
+                  <div class="health-metric-label">
+                    {{ t('dashboard.orderHealth.avgOrderValue') }}
+                  </div>
+                  <div class="health-metric-value">
+                    {{ formatCurrency(orderHealthMetrics.avgOrderValue, selectedCurrency) }}
+                  </div>
                 </div>
                 <div class="health-metric">
                   <div class="health-metric-label">{{ t('dashboard.orderHealth.onTimeRate') }}</div>
-                  <div class="health-metric-value" :class="{ 'metric-good': orderHealthMetrics.onTimeRate >= 90, 'metric-warning': orderHealthMetrics.onTimeRate < 90 && orderHealthMetrics.onTimeRate >= 75, 'metric-bad': orderHealthMetrics.onTimeRate < 75 }">
+                  <div
+                    class="health-metric-value"
+                    :class="{
+                      'metric-good': orderHealthMetrics.onTimeRate >= 90,
+                      'metric-warning':
+                        orderHealthMetrics.onTimeRate < 90 && orderHealthMetrics.onTimeRate >= 75,
+                      'metric-bad': orderHealthMetrics.onTimeRate < 75
+                    }"
+                  >
                     {{ orderHealthMetrics.onTimeRate.toFixed(1) }}%
                   </div>
                 </div>
                 <div class="health-metric">
-                  <div class="health-metric-label">{{ t('dashboard.orderHealth.avgFulfillmentDays') }}</div>
-                  <div class="health-metric-value">{{ orderHealthMetrics.avgFulfillmentDays.toFixed(1) }}</div>
+                  <div class="health-metric-label">
+                    {{ t('dashboard.orderHealth.avgFulfillmentDays') }}
+                  </div>
+                  <div class="health-metric-value">
+                    {{ orderHealthMetrics.avgFulfillmentDays.toFixed(1) }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -147,8 +238,18 @@
               <div v-for="cat in categoryData" :key="cat.name" class="h-bar-item">
                 <div class="h-bar-label">{{ translateCategory(cat.name) }}</div>
                 <div class="h-bar-container">
-                  <div class="h-bar" :style="{ width: (cat.value / maxCategoryValue * 100) + '%', background: cat.color }">
-                    <span class="h-bar-value">{{ selectedCurrency === 'JPY' ? formatCurrency(cat.value, selectedCurrency) : `$${(cat.value / 1000).toFixed(1)}K` }}</span>
+                  <div
+                    class="h-bar"
+                    :style="{
+                      width: (cat.value / maxCategoryValue) * 100 + '%',
+                      background: cat.color
+                    }"
+                  >
+                    <span class="h-bar-value">{{
+                      selectedCurrency === 'JPY'
+                        ? formatCurrency(cat.value, selectedCurrency)
+                        : `$${(cat.value / 1000).toFixed(1)}K`
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -160,11 +261,22 @@
         <!-- Inventory Shortages -->
         <div class="card chart-card full-width">
           <div class="card-header">
-            <h3 class="card-title">{{ t('dashboard.inventoryShortages.title') }} ({{ backlogItems.length }})</h3>
+            <h3 class="card-title">
+              {{ t('dashboard.inventoryShortages.title') }} ({{ backlogItems.length }})
+            </h3>
           </div>
           <div v-if="backlogItems.length === 0" class="no-backlog">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="success-icon">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              class="success-icon"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              />
             </svg>
             <p class="no-backlog-text">{{ t('dashboard.inventoryShortages.noShortages') }}</p>
           </div>
@@ -184,26 +296,39 @@
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  v-for="item in backlogItems"
-                  :key="item.id"
-                >
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer;"><strong>{{ item.order_id }}</strong></td>
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer;"><strong>{{ item.item_sku }}</strong></td>
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer;">{{ translateProductName(item.item_name) }}</td>
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer;">{{ item.quantity_needed }}</td>
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer;">{{ item.quantity_available }}</td>
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer;">
+                <tr v-for="item in backlogItems" :key="item.id">
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
+                    <strong>{{ item.order_id }}</strong>
+                  </td>
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
+                    <strong>{{ item.item_sku }}</strong>
+                  </td>
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
+                    {{ translateProductName(item.item_name) }}
+                  </td>
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
+                    {{ item.quantity_needed }}
+                  </td>
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
+                    {{ item.quantity_available }}
+                  </td>
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
                     <span class="badge danger">
-                      {{ Math.abs(item.quantity_needed - item.quantity_available) }} {{ t('dashboard.inventoryShortages.unitsShort') }}
+                      {{ Math.abs(item.quantity_needed - item.quantity_available) }}
+                      {{ t('dashboard.inventoryShortages.unitsShort') }}
                     </span>
                   </td>
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer;">
-                    <span :style="{ color: item.days_delayed > 7 ? '#ef4444' : '#f59e0b', fontWeight: 600 }">
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
+                    <span
+                      :style="{
+                        color: item.days_delayed > 7 ? '#ef4444' : '#f59e0b',
+                        fontWeight: 600
+                      }"
+                    >
                       {{ item.days_delayed }} {{ t('dashboard.inventoryShortages.days') }}
                     </span>
                   </td>
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer;">
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
                     <span :class="['badge', item.priority]">
                       {{ translatePriority(item.priority) }}
                     </span>
@@ -216,11 +341,7 @@
                     >
                       Create PO
                     </button>
-                    <button
-                      v-else
-                      @click.stop="viewPO(item)"
-                      class="po-button view"
-                    >
+                    <button v-else @click.stop="viewPO(item)" class="po-button view">
                       View PO
                     </button>
                   </td>
@@ -255,11 +376,15 @@
                   class="clickable-row"
                   @click="showProductDetail(item)"
                 >
-                  <td><strong>{{ translateProductName(item.name) }}</strong></td>
+                  <td>
+                    <strong>{{ translateProductName(item.name) }}</strong>
+                  </td>
                   <td>{{ item.sku }}</td>
                   <td>{{ translateCategory(item.category) }}</td>
                   <td>{{ item.unitsOrdered }}</td>
-                  <td><strong>{{ formatCurrency(item.revenue, selectedCurrency) }}</strong></td>
+                  <td>
+                    <strong>{{ formatCurrency(item.revenue, selectedCurrency) }}</strong>
+                  </td>
                   <td>{{ formatDate(item.firstOrderDate) }}</td>
                   <td>
                     <span :class="['badge', getStockBadge(item.stockLevel)]">
@@ -311,7 +436,7 @@ export default {
   components: {
     ProductDetailModal,
     BacklogDetailModal,
-    PurchaseOrderModal,
+    PurchaseOrderModal
   },
   setup() {
     const { t, currentCurrency, translateProductName, translateWarehouse } = useI18n()
@@ -360,7 +485,7 @@ export default {
 
     const statusData = computed(() => {
       const counts = { delivered: 0, shipped: 0, processing: 0, backordered: 0 }
-      allOrders.value.forEach(order => {
+      allOrders.value.forEach((order) => {
         const status = order.status.toLowerCase()
         if (counts[status] !== undefined) counts[status]++
       })
@@ -373,19 +498,20 @@ export default {
       const avgOrderValue = totalOrders > 0 ? totalValue / totalOrders : 0
 
       // Calculate on-time delivery rate (delivered orders that arrived on or before expected date)
-      const deliveredOrders = allOrders.value.filter(o => o.status.toLowerCase() === 'delivered')
-      const onTimeDeliveries = deliveredOrders.filter(o => {
+      const deliveredOrders = allOrders.value.filter((o) => o.status.toLowerCase() === 'delivered')
+      const onTimeDeliveries = deliveredOrders.filter((o) => {
         if (o.actual_delivery && o.expected_delivery) {
           return new Date(o.actual_delivery) <= new Date(o.expected_delivery)
         }
         return false
       }).length
-      const onTimeRate = deliveredOrders.length > 0 ? (onTimeDeliveries / deliveredOrders.length) * 100 : 0
+      const onTimeRate =
+        deliveredOrders.length > 0 ? (onTimeDeliveries / deliveredOrders.length) * 100 : 0
 
       // Calculate average fulfillment speed (days from order to delivery for delivered orders)
       let totalDays = 0
       let countWithDates = 0
-      deliveredOrders.forEach(o => {
+      deliveredOrders.forEach((o) => {
         if (o.order_date && o.actual_delivery) {
           const orderDate = new Date(o.order_date)
           const deliveryDate = new Date(o.actual_delivery)
@@ -415,9 +541,9 @@ export default {
 
       // Get SKUs from orders in the filtered time period
       const orderedSkus = new Set()
-      allOrders.value.forEach(order => {
+      allOrders.value.forEach((order) => {
         if (order.items) {
-          order.items.forEach(item => {
+          order.items.forEach((item) => {
             orderedSkus.add(item.sku)
           })
         }
@@ -425,11 +551,12 @@ export default {
 
       // Only include inventory items that have orders in the selected period
       // If no period is selected (all), include all inventory items
-      const itemsToInclude = selectedPeriod.value === 'all'
-        ? inventoryItems.value
-        : inventoryItems.value.filter(item => orderedSkus.has(item.sku))
+      const itemsToInclude =
+        selectedPeriod.value === 'all'
+          ? inventoryItems.value
+          : inventoryItems.value.filter((item) => orderedSkus.has(item.sku))
 
-      itemsToInclude.forEach(item => {
+      itemsToInclude.forEach((item) => {
         const cat = item.category.toLowerCase()
         if (!categoryMap[cat]) {
           categoryMap[cat] = {
@@ -449,22 +576,35 @@ export default {
 
     const maxCategoryValue = computed(() => {
       if (categoryData.value.length === 0) return 1
-      return Math.max(...categoryData.value.map(c => c.value))
+      return Math.max(...categoryData.value.map((c) => c.value))
     })
 
     const orderTrendData = computed(() => {
       // Group orders by month from the actual data
-      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      const monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+      ]
 
       // Initialize all months with 0 orders
       const monthMap = {}
-      monthNames.forEach(month => {
+      monthNames.forEach((month) => {
         monthMap[month] = { month, orders: 0 }
       })
 
       // Count orders for each month
       if (Array.isArray(allOrders.value)) {
-        allOrders.value.forEach(order => {
+        allOrders.value.forEach((order) => {
           if (order && order.order_date) {
             const date = new Date(order.order_date)
             const monthIndex = date.getMonth()
@@ -478,12 +618,12 @@ export default {
       }
 
       // Return all months in order
-      return monthNames.map(month => monthMap[month])
+      return monthNames.map((month) => monthMap[month])
     })
 
     const maxOrderCount = computed(() => {
       if (orderTrendData.value.length === 0) return 10
-      const max = Math.max(...orderTrendData.value.map(d => d.orders))
+      const max = Math.max(...orderTrendData.value.map((d) => d.orders))
       // Round up to nearest 10 for cleaner axis, minimum 10
       return Math.max(10, Math.ceil(max / 10) * 10)
     })
@@ -493,18 +633,21 @@ export default {
       const productMap = {}
 
       // allOrders is already filtered by API based on: month, warehouse, category, status
-      allOrders.value.forEach(order => {
+      allOrders.value.forEach((order) => {
         if (order.items) {
-          order.items.forEach(item => {
+          order.items.forEach((item) => {
             const sku = item.sku
 
             // Find matching inventory item to get full product details
             // Note: inventoryItems is also filtered by API based on: warehouse, category
-            const invItem = inventoryItems.value.find(i => i.sku === sku)
+            const invItem = inventoryItems.value.find((i) => i.sku === sku)
 
             // Skip products that don't match current inventory filters
             // (e.g., if filtering by warehouse A, don't show products from warehouse B)
-            if (!invItem && (selectedLocation.value !== 'all' || selectedCategory.value !== 'all')) {
+            if (
+              !invItem &&
+              (selectedLocation.value !== 'all' || selectedCategory.value !== 'all')
+            ) {
               return // Skip this product as it doesn't match inventory filters
             }
 
@@ -516,12 +659,20 @@ export default {
                 warehouse: invItem?.warehouse || 'Unknown',
                 unitsOrdered: 0,
                 revenue: 0,
-                stockLevel: invItem ? (invItem.quantity_on_hand > invItem.reorder_point ? 'In Stock' : 'Low Stock') : 'Unknown',
+                stockLevel: invItem
+                  ? invItem.quantity_on_hand > invItem.reorder_point
+                    ? 'In Stock'
+                    : 'Low Stock'
+                  : 'Unknown',
                 firstOrderDate: order.order_date
               }
             } else {
               // Update to EARLIEST order date (to show January at top when selecting All Months)
-              if (order.order_date && (!productMap[sku].firstOrderDate || order.order_date < productMap[sku].firstOrderDate)) {
+              if (
+                order.order_date &&
+                (!productMap[sku].firstOrderDate ||
+                  order.order_date < productMap[sku].firstOrderDate)
+              ) {
                 productMap[sku].firstOrderDate = order.order_date
               }
             }
@@ -556,8 +707,8 @@ export default {
       }
 
       // Get SKUs of items that match the filters
-      const validSkus = new Set(inventoryItems.value.map(item => item.sku))
-      return allBacklogItems.value.filter(b => validSkus.has(b.item_sku))
+      const validSkus = new Set(inventoryItems.value.map((item) => item.sku))
+      return allBacklogItems.value.filter((b) => validSkus.has(b.item_sku))
     })
 
     const loadData = async () => {
@@ -589,8 +740,12 @@ export default {
 
     // Compute total orders once for efficiency
     const totalOrders = computed(() => {
-      return statusData.value.delivered + statusData.value.shipped +
-             statusData.value.processing + statusData.value.backordered
+      return (
+        statusData.value.delivered +
+        statusData.value.shipped +
+        statusData.value.processing +
+        statusData.value.backordered
+      )
     })
 
     const getCircleSegment = (value) => {
@@ -606,9 +761,9 @@ export default {
     const translateCategory = (category) => {
       const categoryMap = {
         'Circuit Boards': t('categories.circuitBoards'),
-        'Sensors': t('categories.sensors'),
-        'Actuators': t('categories.actuators'),
-        'Controllers': t('categories.controllers'),
+        Sensors: t('categories.sensors'),
+        Actuators: t('categories.actuators'),
+        Controllers: t('categories.controllers'),
         'Power Supplies': t('categories.powerSupplies')
       }
       return categoryMap[category] || category
@@ -624,12 +779,12 @@ export default {
 
     const translatePriority = (priority) => {
       const priorityMap = {
-        'high': t('priority.high'),
-        'medium': t('priority.medium'),
-        'low': t('priority.low'),
-        'High': t('priority.high'),
-        'Medium': t('priority.medium'),
-        'Low': t('priority.low')
+        high: t('priority.high'),
+        medium: t('priority.medium'),
+        low: t('priority.low'),
+        High: t('priority.high'),
+        Medium: t('priority.medium'),
+        Low: t('priority.low')
       }
       return priorityMap[priority] || priority
     }
@@ -666,7 +821,7 @@ export default {
 
     const handlePOCreated = (poData) => {
       // Update the backlog item with the new PO ID
-      const item = allBacklogItems.value.find(b => b.id === poData.backlog_item_id)
+      const item = allBacklogItems.value.find((b) => b.id === poData.backlog_item_id)
       if (item) {
         item.purchase_order_id = poData.id
         item.purchase_order = poData
@@ -1151,7 +1306,9 @@ export default {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .task-add-btn:hover:not(:disabled) {

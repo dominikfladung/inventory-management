@@ -96,3 +96,17 @@ See the [Claude Code Hooks Documentation](https://docs.claude.com/en/docs/claude
 - Logs are created in `.claude/logs/` directory
 - Check that `CLAUDE_PROJECT_DIR` environment variable is set correctly
 - Try running the hook manually to test: `./.claude/hooks/post-tool-use.sh`
+
+### 2. Auto-format (`format.sh`)
+
+**Purpose**: Formats files right after Claude edits or writes them.
+
+**Trigger**: `PostToolUse` on `Edit|Write`, configured in `.claude/settings.json`.
+
+**Formatters**:
+- `.vue`, `.js`, `.json`, `.css`, `.html`: Prettier (`npx prettier --write`)
+- `.py`: Ruff (`uvx ruff format`)
+
+**Skipped paths**: anything matched by `.gitignore` (checked with `git check-ignore`)
+
+**Notes**: Tools are fetched on first use, so the first run needs network access. Errors go to stderr and never block Claude.
