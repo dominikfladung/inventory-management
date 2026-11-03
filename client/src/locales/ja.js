@@ -7,6 +7,7 @@ export default {
     finance: '財務',
     demandForecast: '需要予測',
     restocking: '補充発注',
+    reports: 'レポート',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -237,6 +238,38 @@ export default {
     }
   },
 
+  // Reports
+  reports: {
+    title: 'パフォーマンスレポート',
+    description: '四半期の業績指標と月次トレンドを表示します',
+    loading: 'レポートを読み込み中...',
+    loadError: 'レポートの読み込みに失敗しました: {message}',
+    quarterlyPerformance: '四半期パフォーマンス',
+    monthlyRevenueTrend: '月次売上トレンド',
+    monthOverMonth: '前月比分析',
+    noData: '選択したフィルターに該当するレポートデータがありません。',
+    quarterly: {
+      quarter: '四半期',
+      totalOrders: '総注文数',
+      totalRevenue: '総売上',
+      avgOrderValue: '平均注文額',
+      fulfillmentRate: '履行率'
+    },
+    monthly: {
+      month: '月',
+      orders: '注文数',
+      revenue: '売上',
+      change: '増減',
+      growthRate: '成長率'
+    },
+    stats: {
+      totalRevenue: '総売上（年初来）',
+      avgMonthlyRevenue: '月平均売上',
+      totalOrders: '総注文数（年初来）',
+      bestQuarter: '最高業績の四半期'
+    }
+  },
+
   // Filters
   filters: {
     timePeriod: '期間',
@@ -244,7 +277,8 @@ export default {
     category: 'カテゴリ',
     orderStatus: '注文ステータス',
     all: 'すべて',
-    allMonths: 'すべての月'
+    allMonths: 'すべての月',
+    resetFilters: 'すべてのフィルターをリセット'
   },
 
   // Statuses
@@ -396,7 +430,8 @@ export default {
     search: '検索',
     filter: 'フィルター',
     export: 'エクスポート',
-    items: '件'
+    items: '件',
+    notAvailable: '該当なし'
   },
 
   // Product Names
