@@ -20,8 +20,9 @@ Use the Task tool with these specialized subagents for appropriate tasks:
 - **backend-api-test** skill: Use when writing or modifying tests in `tests/backend` directory with pytest and FastAPI TestClient
 
 ### MCP Tools
-- **ALWAYS use GitHub MCP tools** (`mcp__github__*`) for ALL GitHub operations
-  - Exception: Local branches only - use `git checkout -b` instead of `mcp__github__create_branch`
+- **ALWAYS use the `gh` CLI** (via Bash) for ALL GitHub operations (PRs, issues, reviews, etc.)
+  - Local branches: use `git checkout -b`
+  - If `git push` over SSH fails, push over HTTPS with the gh credential helper: `git -c credential.helper='!gh auth git-credential' push -u https://github.com/<owner>/<repo>.git <branch>`
 - **ALWAYS use Playwright MCP tools** (`mcp__playwright__*`) for browser testing
   - Test against: `http://localhost:3000` (frontend), `http://localhost:8001` (API)
 
