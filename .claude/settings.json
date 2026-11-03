@@ -9,6 +9,14 @@
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/format.sh"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/post-tool-use.sh"
+          }
+        ]
       }
     ]
   }
