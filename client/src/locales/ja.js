@@ -360,6 +360,30 @@ export default {
     selectLanguage: '言語を選択'
   },
 
+  // 発注書
+  purchaseOrder: {
+    createTitle: '発注書を作成',
+    viewTitle: '発注書の詳細',
+    item: '品目',
+    shortage: '不足数',
+    supplierName: '仕入先名',
+    quantity: '数量',
+    unitCost: '単価',
+    totalCost: '合計金額',
+    expectedDelivery: '納品予定日',
+    notes: '備考（任意）',
+    poNumber: '発注番号',
+    status: 'ステータス',
+    createdDate: '作成日',
+    submit: '発注書を作成',
+    submitting: '作成中...',
+    loading: '発注書を読み込み中...',
+    loadError: '発注書の読み込みに失敗しました',
+    createError: '発注書の作成に失敗しました',
+    required: '必須項目をすべて入力してください',
+    none: 'なし'
+  },
+
   // Common
   common: {
     loading: '読み込み中...',

@@ -40,3 +40,6 @@ purchase_orders = load_json_file('purchase_orders.json')
 
 # Submitted restocking orders (in-memory only, lost on restart)
 submitted_orders = []
+
+# User tasks (in-memory only, lost on restart)
+tasks = []
