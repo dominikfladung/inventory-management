@@ -37,3 +37,6 @@ purchase_orders = load_json_file('purchase_orders.json')
 
 # All data is now loaded from JSON files in the data/ directory
 # This allows for easier maintenance and updates of the sample data
+
+# Submitted restocking orders (in-memory only, lost on restart)
+submitted_orders = []
