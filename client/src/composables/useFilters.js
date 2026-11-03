@@ -9,10 +9,12 @@ const selectedStatus = ref('all')
 export function useFilters() {
   // Check if any filters are active
   const hasActiveFilters = computed(() => {
-    return selectedPeriod.value !== 'all' ||
-           selectedLocation.value !== 'all' ||
-           selectedCategory.value !== 'all' ||
-           selectedStatus.value !== 'all'
+    return (
+      selectedPeriod.value !== 'all' ||
+      selectedLocation.value !== 'all' ||
+      selectedCategory.value !== 'all' ||
+      selectedStatus.value !== 'all'
+    )
   })
 
   // Reset all filters to default

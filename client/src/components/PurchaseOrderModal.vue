@@ -4,10 +4,17 @@
       <div v-if="isOpen && backlogItem" class="modal-overlay" @click="close">
         <div class="modal-container" @click.stop>
           <div class="modal-header">
-            <h3 class="modal-title">{{ mode === 'view' ? t('purchaseOrder.viewTitle') : t('purchaseOrder.createTitle') }}</h3>
+            <h3 class="modal-title">
+              {{ mode === 'view' ? t('purchaseOrder.viewTitle') : t('purchaseOrder.createTitle') }}
+            </h3>
             <button class="close-button" @click="close">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path
+                  d="M15 5L5 15M5 5L15 15"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
               </svg>
             </button>
           </div>
@@ -30,20 +37,52 @@
 
             <form v-if="mode === 'create'" class="po-form" @submit.prevent="submit">
               <div class="form-field">
-                <label class="info-label" for="po-supplier">{{ t('purchaseOrder.supplierName') }}</label>
-                <input id="po-supplier" v-model="form.supplier_name" class="form-input" type="text" required />
+                <label class="info-label" for="po-supplier">{{
+                  t('purchaseOrder.supplierName')
+                }}</label>
+                <input
+                  id="po-supplier"
+                  v-model="form.supplier_name"
+                  class="form-input"
+                  type="text"
+                  required
+                />
               </div>
               <div class="form-field">
                 <label class="info-label" for="po-qty">{{ t('purchaseOrder.quantity') }}</label>
-                <input id="po-qty" v-model.number="form.quantity" class="form-input" type="number" min="1" step="1" required />
+                <input
+                  id="po-qty"
+                  v-model.number="form.quantity"
+                  class="form-input"
+                  type="number"
+                  min="1"
+                  step="1"
+                  required
+                />
               </div>
               <div class="form-field">
                 <label class="info-label" for="po-cost">{{ t('purchaseOrder.unitCost') }}</label>
-                <input id="po-cost" v-model.number="form.unit_cost" class="form-input" type="number" min="0" step="0.01" required />
+                <input
+                  id="po-cost"
+                  v-model.number="form.unit_cost"
+                  class="form-input"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  required
+                />
               </div>
               <div class="form-field">
-                <label class="info-label" for="po-date">{{ t('purchaseOrder.expectedDelivery') }}</label>
-                <input id="po-date" v-model="form.expected_delivery_date" class="form-input" type="date" required />
+                <label class="info-label" for="po-date">{{
+                  t('purchaseOrder.expectedDelivery')
+                }}</label>
+                <input
+                  id="po-date"
+                  v-model="form.expected_delivery_date"
+                  class="form-input"
+                  type="date"
+                  required
+                />
               </div>
               <div class="form-field">
                 <label class="info-label" for="po-notes">{{ t('purchaseOrder.notes') }}</label>
@@ -62,7 +101,9 @@
                 </div>
                 <div class="info-item">
                   <div class="info-label">{{ t('purchaseOrder.status') }}</div>
-                  <div class="info-value"><span class="badge">{{ purchaseOrder.status }}</span></div>
+                  <div class="info-value">
+                    <span class="badge">{{ purchaseOrder.status }}</span>
+                  </div>
                 </div>
                 <div class="info-item">
                   <div class="info-label">{{ t('purchaseOrder.supplierName') }}</div>
@@ -78,11 +119,15 @@
                 </div>
                 <div class="info-item">
                   <div class="info-label">{{ t('purchaseOrder.totalCost') }}</div>
-                  <div class="info-value">{{ formatCurrency(purchaseOrder.unit_cost * purchaseOrder.quantity) }}</div>
+                  <div class="info-value">
+                    {{ formatCurrency(purchaseOrder.unit_cost * purchaseOrder.quantity) }}
+                  </div>
                 </div>
                 <div class="info-item">
                   <div class="info-label">{{ t('purchaseOrder.expectedDelivery') }}</div>
-                  <div class="info-value">{{ formatDate(purchaseOrder.expected_delivery_date) }}</div>
+                  <div class="info-value">
+                    {{ formatDate(purchaseOrder.expected_delivery_date) }}
+                  </div>
                 </div>
                 <div class="info-item">
                   <div class="info-label">{{ t('purchaseOrder.createdDate') }}</div>
@@ -90,15 +135,25 @@
                 </div>
                 <div class="info-item">
                   <div class="info-label">{{ t('purchaseOrder.notes') }}</div>
-                  <div class="info-value notes-value">{{ purchaseOrder.notes || t('purchaseOrder.none') }}</div>
+                  <div class="info-value notes-value">
+                    {{ purchaseOrder.notes || t('purchaseOrder.none') }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn-secondary" @click="close">{{ t('common.close') }}</button>
-            <button v-if="mode === 'create'" type="button" class="btn-primary" :disabled="submitting" @click="submit">
+            <button type="button" class="btn-secondary" @click="close">
+              {{ t('common.close') }}
+            </button>
+            <button
+              v-if="mode === 'create'"
+              type="button"
+              class="btn-primary"
+              :disabled="submitting"
+              @click="submit"
+            >
               {{ submitting ? t('purchaseOrder.submitting') : t('purchaseOrder.submit') }}
             </button>
           </div>
@@ -179,7 +234,13 @@ watch(
 
 const submit = async () => {
   error.value = null
-  if (!form.supplier_name.trim() || !form.expected_delivery_date || !(form.quantity >= 1) || !(form.unit_cost >= 0) || form.unit_cost === '') {
+  if (
+    !form.supplier_name.trim() ||
+    !form.expected_delivery_date ||
+    !(form.quantity >= 1) ||
+    !(form.unit_cost >= 0) ||
+    form.unit_cost === ''
+  ) {
     error.value = t('purchaseOrder.required')
     return
   }
@@ -195,9 +256,10 @@ const submit = async () => {
     })
     emit('po-created', po)
   } catch (err) {
-    error.value = err.response?.data?.detail && typeof err.response.data.detail === 'string'
-      ? err.response.data.detail
-      : t('purchaseOrder.createError')
+    error.value =
+      err.response?.data?.detail && typeof err.response.data.detail === 'string'
+        ? err.response.data.detail
+        : t('purchaseOrder.createError')
     console.error('Create PO error:', err)
   } finally {
     submitting.value = false
@@ -450,9 +512,17 @@ const formatDate = (dateString) => {
   border-color: #cbd5e1;
 }
 
-
-.po-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
-.form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+.po-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 .form-input {
   padding: 0.625rem 0.75rem;
   border: 1px solid #e2e8f0;
@@ -462,8 +532,15 @@ const formatDate = (dateString) => {
   font-family: inherit;
   background: white;
 }
-.form-input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-textarea.form-input { resize: vertical; min-height: 72px; }
+.form-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+textarea.form-input {
+  resize: vertical;
+  min-height: 72px;
+}
 .form-error {
   padding: 0.75rem 1rem;
   background: #fef2f2;
@@ -472,7 +549,10 @@ textarea.form-input { resize: vertical; min-height: 72px; }
   border-radius: 8px;
   font-size: 0.875rem;
 }
-.state-text { color: #64748b; font-size: 0.938rem; }
+.state-text {
+  color: #64748b;
+  font-size: 0.938rem;
+}
 .btn-primary {
   padding: 0.625rem 1.25rem;
   background: #0f172a;
@@ -485,10 +565,25 @@ textarea.form-input { resize: vertical; min-height: 72px; }
   font-family: inherit;
   transition: all 0.15s ease;
 }
-.btn-primary:hover:not(:disabled) { background: #1e293b; }
-.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-.badge { padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.813rem; font-weight: 600; background: #dbeafe; color: #1e40af; text-transform: capitalize; }
-.notes-value { white-space: pre-wrap; }
+.btn-primary:hover:not(:disabled) {
+  background: #1e293b;
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.813rem;
+  font-weight: 600;
+  background: #dbeafe;
+  color: #1e40af;
+  text-transform: capitalize;
+}
+.notes-value {
+  white-space: pre-wrap;
+}
 
 /* Modal transition animations */
 .modal-enter-active,

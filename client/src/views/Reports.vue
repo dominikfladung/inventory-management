@@ -26,7 +26,9 @@
             </thead>
             <tbody>
               <tr v-for="(q, index) in quarterlyData" :key="index">
-                <td><strong>{{ q.quarter }}</strong></td>
+                <td>
+                  <strong>{{ q.quarter }}</strong>
+                </td>
                 <td>{{ q.total_orders }}</td>
                 <td>${{ formatNumber(q.total_revenue) }}</td>
                 <td>${{ formatNumber(q.avg_order_value) }}</td>
@@ -80,17 +82,25 @@
             </thead>
             <tbody>
               <tr v-for="(month, index) in monthlyData" :key="index">
-                <td><strong>{{ formatMonth(month.month) }}</strong></td>
+                <td>
+                  <strong>{{ formatMonth(month.month) }}</strong>
+                </td>
                 <td>{{ month.order_count }}</td>
                 <td>${{ formatNumber(month.revenue) }}</td>
                 <td>
-                  <span v-if="index > 0" :class="getChangeClass(month.revenue, monthlyData[index - 1].revenue)">
+                  <span
+                    v-if="index > 0"
+                    :class="getChangeClass(month.revenue, monthlyData[index - 1].revenue)"
+                  >
                     {{ getChangeValue(month.revenue, monthlyData[index - 1].revenue) }}
                   </span>
                   <span v-else>-</span>
                 </td>
                 <td>
-                  <span v-if="index > 0" :class="getChangeClass(month.revenue, monthlyData[index - 1].revenue)">
+                  <span
+                    v-if="index > 0"
+                    :class="getChangeClass(month.revenue, monthlyData[index - 1].revenue)"
+                  >
                     {{ getGrowthRate(month.revenue, monthlyData[index - 1].revenue) }}
                   </span>
                   <span v-else>-</span>
@@ -159,7 +169,6 @@ export default {
 
         // Calculate summary stats
         this.calculateSummaryStats()
-
       } catch (err) {
         console.error('Error loading reports:', err)
         this.error = 'Failed to load reports: ' + err.message
@@ -171,7 +180,7 @@ export default {
     calculateSummaryStats() {
       // Calculate total revenue
       var total = 0
-      for (var i = 0; i < this.monthlyData.length; i++) {
+      for (let i = 0; i < this.monthlyData.length; i++) {
         total = total + this.monthlyData[i].revenue
       }
       this.totalRevenue = total
@@ -185,7 +194,7 @@ export default {
 
       // Calculate total orders
       var orders = 0
-      for (var i = 0; i < this.monthlyData.length; i++) {
+      for (let i = 0; i < this.monthlyData.length; i++) {
         orders = orders + this.monthlyData[i].order_count
       }
       this.totalOrders = orders
@@ -193,7 +202,7 @@ export default {
       // Find best quarter
       var bestQ = ''
       var bestRevenue = 0
-      for (var i = 0; i < this.quarterlyData.length; i++) {
+      for (let i = 0; i < this.quarterlyData.length; i++) {
         if (this.quarterlyData[i].total_revenue > bestRevenue) {
           bestRevenue = this.quarterlyData[i].total_revenue
           bestQ = this.quarterlyData[i].quarter
@@ -235,7 +244,20 @@ export default {
       var year = parts[0]
       var month = parts[1]
 
-      var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      var monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+      ]
       var monthIndex = parseInt(month) - 1
 
       return monthNames[monthIndex] + ' ' + year
@@ -244,7 +266,7 @@ export default {
     getBarHeight(revenue) {
       // Calculate bar height (max height 200px)
       var maxRevenue = 0
-      for (var i = 0; i < this.monthlyData.length; i++) {
+      for (let i = 0; i < this.monthlyData.length; i++) {
         if (this.monthlyData[i].revenue > maxRevenue) {
           maxRevenue = this.monthlyData[i].revenue
         }

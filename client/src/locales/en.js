@@ -169,7 +169,8 @@ export default {
       stable: 'Stable',
       decreasing: 'Decreasing'
     },
-    overBudget: 'Order total exceeds the selected budget. Reduce quantities or increase the budget.',
+    overBudget:
+      'Order total exceeds the selected budget. Reduce quantities or increase the budget.',
     invalidQuantity: 'All quantities must be whole numbers of at least 1.',
     placeOrder: 'Place Order',
     placing: 'Placing order...',

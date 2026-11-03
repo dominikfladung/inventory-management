@@ -1,21 +1,19 @@
 <template>
   <div class="language-switcher">
-    <button
-      class="language-button"
-      @click="toggleDropdown"
-      @blur="handleBlur"
-    >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        class="globe-icon"
-      >
-        <circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M3 10H17" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M10 3C10 3 7.5 5.5 7.5 10C7.5 14.5 10 17 10 17" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M10 3C10 3 12.5 5.5 12.5 10C12.5 14.5 10 17 10 17" stroke="currentColor" stroke-width="1.5"/>
+    <button class="language-button" @click="toggleDropdown" @blur="handleBlur">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="globe-icon">
+        <circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5" />
+        <path d="M3 10H17" stroke="currentColor" stroke-width="1.5" />
+        <path
+          d="M10 3C10 3 7.5 5.5 7.5 10C7.5 14.5 10 17 10 17"
+          stroke="currentColor"
+          stroke-width="1.5"
+        />
+        <path
+          d="M10 3C10 3 12.5 5.5 12.5 10C12.5 14.5 10 17 10 17"
+          stroke="currentColor"
+          stroke-width="1.5"
+        />
       </svg>
       <span class="language-label">{{ localeName }}</span>
       <svg
@@ -26,7 +24,7 @@
         viewBox="0 0 16 16"
         fill="none"
       >
-        <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
       </svg>
     </button>
 
@@ -47,7 +45,13 @@
           fill="none"
           class="check-icon"
         >
-          <path d="M4 9L7.5 12.5L14 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path
+            d="M4 9L7.5 12.5L14 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
       </button>
     </div>

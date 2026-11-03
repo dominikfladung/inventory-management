@@ -1,6 +1,7 @@
 """
 Pytest configuration and fixtures for backend API tests.
 """
+
 import sys
 from pathlib import Path
 
@@ -34,7 +35,7 @@ def sample_inventory_item():
         "reorder_point": 200,
         "unit_cost": 24.99,
         "location": "Warehouse A-12",
-        "last_updated": "2025-09-30T10:30:00"
+        "last_updated": "2025-09-30T10:30:00",
     }
 
 
@@ -46,12 +47,7 @@ def sample_order():
         "order_number": "ORD-2025-0001",
         "customer": "MegaCorp Industries",
         "items": [
-            {
-                "sku": "SPR-602",
-                "name": "Compression Spring",
-                "quantity": 981,
-                "unit_price": 89.5
-            }
+            {"sku": "SPR-602", "name": "Compression Spring", "quantity": 981, "unit_price": 89.5}
         ],
         "status": "Delivered",
         "warehouse": "Tokyo",
@@ -59,5 +55,5 @@ def sample_order():
         "order_date": "2025-01-08T10:19:00",
         "expected_delivery": "2025-01-21T10:19:00",
         "total_value": 87799.5,
-        "actual_delivery": "2025-01-20T10:19:00"
+        "actual_delivery": "2025-01-20T10:19:00",
     }

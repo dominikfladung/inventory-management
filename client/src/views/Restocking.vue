@@ -70,7 +70,9 @@
           </thead>
           <tbody>
             <tr v-for="row in rows" :key="row.sku">
-              <td><strong>{{ row.sku }}</strong></td>
+              <td>
+                <strong>{{ row.sku }}</strong>
+              </td>
               <td>{{ translateProductName(row.name) }}</td>
               <td>
                 <input
@@ -83,7 +85,9 @@
                 />
               </td>
               <td>{{ money(row.unit_cost) }}</td>
-              <td><strong>{{ money(lineTotal(row)) }}</strong></td>
+              <td>
+                <strong>{{ money(lineTotal(row)) }}</strong>
+              </td>
               <td>{{ row.supplier }}</td>
               <td>{{ row.lead_time_days }}</td>
               <td>
@@ -96,7 +100,9 @@
 
       <div class="order-actions">
         <div v-if="overBudget" class="warning-text">{{ t('restocking.overBudget') }}</div>
-        <div v-else-if="!allQuantitiesValid" class="warning-text">{{ t('restocking.invalidQuantity') }}</div>
+        <div v-else-if="!allQuantitiesValid" class="warning-text">
+          {{ t('restocking.invalidQuantity') }}
+        </div>
         <div v-if="successMessage" class="success-text">{{ successMessage }}</div>
         <div v-if="submitError" class="error-text">{{ submitError }}</div>
         <button class="place-order-btn" :disabled="!canSubmit" @click="submitOrder">
@@ -119,7 +125,8 @@ export default {
 
     // Source data is USD; always display USD regardless of locale
     const money = (v) =>
-      '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+      '$' +
+      Number(v).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })
 
     const budget = ref(100000)
     const rows = ref([])
@@ -142,7 +149,7 @@ export default {
     const orderLeadTime = computed(() =>
       rows.value.reduce((max, r) => Math.max(max, r.lead_time_days || 0), 0)
     )
-    const allQuantitiesValid = computed(() => rows.value.every(r => isValidQty(r.quantity)))
+    const allQuantitiesValid = computed(() => rows.value.every((r) => isValidQty(r.quantity)))
     const pending = ref(false) // debounce pending
     const canSubmit = computed(
       () =>
@@ -163,7 +170,7 @@ export default {
         error.value = null
         const data = await api.getRestockRecommendations(budget.value)
         if (myId !== requestId) return
-        rows.value = data.items.map(item => ({ ...item }))
+        rows.value = data.items.map((item) => ({ ...item }))
       } catch (err) {
         if (myId !== requestId) return
         error.value = t('restocking.loadError') + ': ' + err.message
@@ -199,7 +206,7 @@ export default {
       try {
         const order = await api.placeRestockOrder({
           budget: budget.value,
-          items: rows.value.map(r => ({ sku: r.sku, quantity: r.quantity }))
+          items: rows.value.map((r) => ({ sku: r.sku, quantity: r.quantity }))
         })
         // Prevent resubmission: clear the table until budget changes / reload
         rows.value = []
@@ -209,7 +216,8 @@ export default {
         })
       } catch (err) {
         const detail = err.response && err.response.data && err.response.data.detail
-        const text = typeof detail === 'string' ? detail : (detail ? JSON.stringify(detail) : err.message)
+        const text =
+          typeof detail === 'string' ? detail : detail ? JSON.stringify(detail) : err.message
         submitError.value = t('restocking.failure') + ': ' + text
       } finally {
         submitting.value = false
@@ -223,7 +231,9 @@ export default {
 
     const trendLabel = (trend) => {
       const key = String(trend || '').toLowerCase()
-      return ['increasing', 'decreasing', 'stable'].includes(key) ? t(`restocking.trend.${key}`) : trend
+      return ['increasing', 'decreasing', 'stable'].includes(key)
+        ? t(`restocking.trend.${key}`)
+        : trend
     }
 
     onMounted(loadRecommendations)

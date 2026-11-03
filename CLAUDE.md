@@ -49,6 +49,18 @@ cd client
 npm install && npm run dev
 ```
 
+## Tests & Lint (also run in CI: `.github/workflows/ci.yml`)
+
+```bash
+# Backend (from server/)
+uv sync
+uv run ruff check . ../tests && uv run ruff format --check . ../tests
+uv run pytest -c ../tests/pytest.ini ../tests/backend
+
+# Frontend (from client/)
+npm run lint && npm run format:check && npm test && npm run build
+```
+
 ## Key Patterns
 
 **Filter System**: 4 filters (Time Period, Warehouse, Category, Order Status) apply to all data via query params
