@@ -25,11 +25,17 @@ if [ ! -d "$PROJECT_ROOT/server/.venv" ]; then
     uv sync
 fi
 
+# pnpm is required for the frontend
+if ! command -v pnpm >/dev/null 2>&1; then
+    echo -e "${YELLOW}pnpm not found. Install it with: npm install -g pnpm${NC}"
+    exit 1
+fi
+
 # Check if frontend dependencies are installed
 if [ ! -d "$PROJECT_ROOT/client/node_modules" ]; then
     echo -e "${YELLOW}Frontend dependencies not found. Installing...${NC}"
     cd "$PROJECT_ROOT/client"
-    npm install
+    pnpm install
 fi
 
 # Start backend server in background
@@ -44,7 +50,7 @@ sleep 2
 # Start frontend server in background
 echo -e "${GREEN}Starting frontend server on http://localhost:3000${NC}"
 cd "$PROJECT_ROOT/client"
-npm run dev > /tmp/inventory-frontend.log 2>&1 &
+pnpm dev > /tmp/inventory-frontend.log 2>&1 &
 FRONTEND_PID=$!
 
 # Wait a moment for frontend to start

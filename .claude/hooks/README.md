@@ -104,7 +104,7 @@ See the [Claude Code Hooks Documentation](https://docs.claude.com/en/docs/claude
 **Trigger**: `PostToolUse` on `Edit|Write`, configured in `.claude/settings.json`.
 
 **Formatters**:
-- `.vue`, `.js`, `.json`, `.css`, `.html`: Prettier (`npx prettier --write`)
+- `.vue`, `.js`, `.json`, `.css`, `.html`: Prettier (`pnpm --dir client exec prettier --write`, falling back to `pnpm dlx prettier`)
 - `.py`: Ruff (`uvx ruff format`)
 
 **Skipped paths**: anything matched by `.gitignore` (checked with `git check-ignore`)

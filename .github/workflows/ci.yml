@@ -63,14 +63,17 @@ jobs:
         working-directory: client
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: client/package.json
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
           cache-dependency-path: client/package.json
-      - run: npm install
-      - run: npm run lint
-      - run: npm run format:check
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm format:check
 
   frontend-test:
     name: frontend-test
@@ -80,13 +83,16 @@ jobs:
         working-directory: client
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: client/package.json
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
           cache-dependency-path: client/package.json
-      - run: npm install
-      - run: npm test
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm test
 
   frontend-build:
     name: frontend-build
@@ -96,10 +102,13 @@ jobs:
         working-directory: client
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: client/package.json
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
           cache-dependency-path: client/package.json
-      - run: npm install
-      - run: npm run build
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm build

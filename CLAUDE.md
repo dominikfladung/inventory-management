@@ -2,7 +2,7 @@
 
 Factory Inventory Management System Demo with GitHub integration - Full-stack application with Vue 3 frontend, Python FastAPI backend, and in-memory mock data (no database).
 
-> ⚠️ **This repository and any fork you create are PUBLIC.** Do not commit credentials, internal hostnames, or private registry URLs. `client/.npmrc` pins the public npm registry and `client/package-lock.json` is gitignored to prevent locally-configured registries from leaking into commits — leave both in place.
+> ⚠️ **This repository and any fork you create are PUBLIC.** Do not commit credentials, internal hostnames, or private registry URLs. `client/.npmrc` pins the public npm registry and `client/package-lock.json` and `client/pnpm-lock.yaml` are gitignored to prevent locally-configured registries from leaking into commits — leave both in place.
 
 ## Critical Tool Usage Rules
 
@@ -47,7 +47,7 @@ uv run python main.py
 
 # Frontend
 cd client
-npm install && npm run dev
+pnpm install && pnpm dev
 ```
 
 ## Tests & Lint (also run in CI: `.github/workflows/ci.yml`)
@@ -59,7 +59,7 @@ uv run ruff check . ../tests && uv run ruff format --check . ../tests
 uv run pytest -c ../tests/pytest.ini ../tests/backend
 
 # Frontend (from client/)
-npm run lint && npm run format:check && npm test && npm run build
+pnpm lint && pnpm format:check && pnpm test && pnpm build
 ```
 
 ## Key Patterns
