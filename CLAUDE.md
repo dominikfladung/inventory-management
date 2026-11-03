@@ -21,6 +21,7 @@ Use the Task tool with these specialized subagents for appropriate tasks:
 
 ### MCP Tools
 - **ALWAYS use the `gh` CLI** (via Bash) for ALL GitHub operations (PRs, issues, reviews, etc.)
+  - **ALWAYS work against the fork (`origin`, `dominikfladung/inventory-management`), NEVER against `upstream` (`beck-source/inventory-management`)**: push branches, open PRs (`gh pr create -R dominikfladung/inventory-management --base main`) and run all other `gh` commands with `-R dominikfladung/inventory-management`. Plain `gh repo view`/`gh pr create` resolve to `upstream`, so always pass `-R` explicitly. Never push to or open PRs/issues on `upstream`.
   - Local branches: use `git checkout -b`
   - If `git push` over SSH fails, push over HTTPS with the gh credential helper: `git -c credential.helper='!gh auth git-credential' push -u https://github.com/<owner>/<repo>.git <branch>`
 - **ALWAYS use Playwright MCP tools** (`mcp__playwright__*`) for browser testing
