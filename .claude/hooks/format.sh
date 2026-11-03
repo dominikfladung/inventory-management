@@ -14,7 +14,11 @@ git check-ignore -q "$FILE" && exit 0
 
 case "${FILE##*.}" in
     vue|js|json|css|html)
-        npx --yes prettier --write "$FILE" >&2 || true
+        if [ -d client/node_modules ]; then
+            pnpm --dir client exec prettier --write "$FILE" >&2 || true
+        else
+            pnpm dlx prettier --write "$FILE" >&2 || true
+        fi
         ;;
     py)
         uvx ruff format "$FILE" >&2 || true
