@@ -2,8 +2,6 @@
 Tests for reports API endpoints.
 """
 
-import pytest
-
 
 class TestReportsEndpoints:
     """Test suite for quarterly and monthly report endpoints."""
@@ -45,10 +43,7 @@ class TestReportsEndpoints:
 
         assert sum(q["total_orders"] for q in quarterly) == len(orders)
         assert (
-            abs(
-                sum(q["total_revenue"] for q in quarterly)
-                - sum(o["total_value"] for o in orders)
-            )
+            abs(sum(q["total_revenue"] for q in quarterly) - sum(o["total_value"] for o in orders))
             < 0.01
         )
 
@@ -60,10 +55,7 @@ class TestReportsEndpoints:
 
         data = response.json()
         assert sum(m["order_count"] for m in data) == len(orders)
-        assert (
-            abs(sum(m["revenue"] for m in data) - sum(o["total_value"] for o in orders))
-            < 0.01
-        )
+        assert abs(sum(m["revenue"] for m in data) - sum(o["total_value"] for o in orders)) < 0.01
 
     def test_monthly_trends_by_month(self, client):
         """Test that the month filter returns only that month."""
@@ -96,9 +88,7 @@ class TestReportsEndpoints:
 
     def test_reports_multiple_filters(self, client):
         """Test combining warehouse, category, status and month filters."""
-        query = (
-            "warehouse=San Francisco&category=Sensors&status=Delivered&month=Q1-2025"
-        )
+        query = "warehouse=San Francisco&category=Sensors&status=Delivered&month=Q1-2025"
         orders = client.get(f"/api/orders?{query}").json()
 
         monthly = client.get(f"/api/reports/monthly-trends?{query}").json()

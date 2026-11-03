@@ -59,7 +59,8 @@ export const api = {
 
   async getQuarterlyReports(filters = {}) {
     const params = new URLSearchParams()
-    if (filters.warehouse && filters.warehouse !== 'all') params.append('warehouse', filters.warehouse)
+    if (filters.warehouse && filters.warehouse !== 'all')
+      params.append('warehouse', filters.warehouse)
     if (filters.category && filters.category !== 'all') params.append('category', filters.category)
     if (filters.status && filters.status !== 'all') params.append('status', filters.status)
     if (filters.month && filters.month !== 'all') params.append('month', filters.month)
@@ -70,7 +71,8 @@ export const api = {
 
   async getMonthlyTrends(filters = {}) {
     const params = new URLSearchParams()
-    if (filters.warehouse && filters.warehouse !== 'all') params.append('warehouse', filters.warehouse)
+    if (filters.warehouse && filters.warehouse !== 'all')
+      params.append('warehouse', filters.warehouse)
     if (filters.category && filters.category !== 'all') params.append('category', filters.category)
     if (filters.status && filters.status !== 'all') params.append('status', filters.status)
     if (filters.month && filters.month !== 'all') params.append('month', filters.month)
