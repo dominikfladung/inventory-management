@@ -6,6 +6,7 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充発注',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -126,7 +127,55 @@ export default {
       status: 'ステータス',
       expectedDelivery: '予定配達日',
       actualDelivery: '実際の配達日'
+    },
+    submittedOrders: {
+      title: '発注済み注文',
+      empty: '発注済みの補充注文はまだありません。',
+      orderId: '注文ID',
+      orderDate: '注文日',
+      items: '品目',
+      totalCost: '合計コスト',
+      leadTime: 'リードタイム（日）',
+      expectedDelivery: '予定配達日',
+      status: 'ステータス',
+      loadError: '発注済み注文の読み込みに失敗しました'
     }
+  },
+
+  // Restocking
+  restocking: {
+    title: '補充発注',
+    description: '予算内で補充注文を計画します',
+    budget: '予算',
+    budgetSlider: '補充予算',
+    orderTotal: '注文合計',
+    remaining: '残予算',
+    orderLeadTime: '注文リードタイム',
+    days: '{count}日',
+    recommendedItems: '推奨品目',
+    noItems: 'この予算に対する推奨品目はありません。',
+    table: {
+      sku: 'SKU',
+      name: '製品',
+      quantity: '数量',
+      unitCost: '単価',
+      lineTotal: '小計',
+      supplier: 'サプライヤー',
+      leadTime: 'リードタイム（日）',
+      trend: 'トレンド'
+    },
+    trend: {
+      increasing: '増加',
+      stable: '安定',
+      decreasing: '減少'
+    },
+    overBudget: '注文合計が予算を超えています。数量を減らすか予算を増やしてください。',
+    invalidQuantity: 'すべての数量は1以上の整数にしてください。',
+    placeOrder: '注文する',
+    placing: '注文中...',
+    success: '注文 {id} を受け付けました。予定配達日: {date}',
+    failure: '注文に失敗しました',
+    loadError: '推奨の読み込みに失敗しました'
   },
 
   // Finance/Spending
@@ -309,6 +358,30 @@ export default {
     english: 'English',
     japanese: '日本語',
     selectLanguage: '言語を選択'
+  },
+
+  // 発注書
+  purchaseOrder: {
+    createTitle: '発注書を作成',
+    viewTitle: '発注書の詳細',
+    item: '品目',
+    shortage: '不足数',
+    supplierName: '仕入先名',
+    quantity: '数量',
+    unitCost: '単価',
+    totalCost: '合計金額',
+    expectedDelivery: '納品予定日',
+    notes: '備考（任意）',
+    poNumber: '発注番号',
+    status: 'ステータス',
+    createdDate: '作成日',
+    submit: '発注書を作成',
+    submitting: '作成中...',
+    loading: '発注書を読み込み中...',
+    loadError: '発注書の読み込みに失敗しました',
+    createError: '発注書の作成に失敗しました',
+    required: '必須項目をすべて入力してください',
+    none: 'なし'
   },
 
   // Common

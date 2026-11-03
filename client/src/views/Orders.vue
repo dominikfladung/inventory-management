@@ -75,11 +75,48 @@
         </div>
       </div>
     </div>
+
+    <div class="card submitted-orders">
+      <div class="card-header">
+        <h3 class="card-title">{{ t('orders.submittedOrders.title') }} ({{ submittedOrders.length }})</h3>
+      </div>
+      <div v-if="submittedLoading" class="loading">{{ t('common.loading') }}</div>
+      <div v-else-if="submittedError" class="error">{{ submittedError }}</div>
+      <div v-else-if="submittedOrders.length === 0" class="submitted-empty">{{ t('orders.submittedOrders.empty') }}</div>
+      <div v-else class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ t('orders.submittedOrders.orderId') }}</th>
+              <th>{{ t('orders.submittedOrders.orderDate') }}</th>
+              <th>{{ t('orders.submittedOrders.items') }}</th>
+              <th>{{ t('orders.submittedOrders.totalCost') }}</th>
+              <th>{{ t('orders.submittedOrders.leadTime') }}</th>
+              <th>{{ t('orders.submittedOrders.expectedDelivery') }}</th>
+              <th>{{ t('orders.submittedOrders.status') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="so in submittedOrders" :key="so.id">
+              <td><strong>{{ so.id }}</strong></td>
+              <td>{{ formatDate(so.order_date) }}</td>
+              <td>
+                <div v-for="item in so.items" :key="item.sku" class="so-item">{{ item.sku }} x {{ item.quantity }}</div>
+              </td>
+              <td><strong>${{ so.total_cost.toLocaleString('en-US', { maximumFractionDigits: 2 }) }}</strong></td>
+              <td>{{ so.lead_time_days }}</td>
+              <td>{{ formatDate(so.expected_delivery) }}</td>
+              <td><span class="badge info">{{ so.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, onMounted, onActivated, watch, computed } from 'vue'
 import { api } from '../api'
 import { useFilters } from '../composables/useFilters'
 import { useI18n } from '../composables/useI18n'
@@ -95,6 +132,9 @@ export default {
     const loading = ref(true)
     const error = ref(null)
     const orders = ref([])
+    const submittedOrders = ref([])
+    const submittedError = ref(null)
+    const submittedLoading = ref(true)
 
     // Use shared filters
     const {
@@ -153,13 +193,32 @@ export default {
       })
     }
 
-    onMounted(loadOrders)
+    const loadSubmittedOrders = async () => {
+      try {
+        submittedLoading.value = true
+        submittedError.value = null
+        submittedOrders.value = await api.getSubmittedOrders()
+      } catch (err) {
+        submittedError.value = t('orders.submittedOrders.loadError') + ': ' + err.message
+      } finally {
+        submittedLoading.value = false
+      }
+    }
+
+    onMounted(() => {
+      loadOrders()
+      loadSubmittedOrders()
+    })
+    onActivated(loadSubmittedOrders)
 
     return {
       t,
       loading,
       error,
       orders,
+      submittedOrders,
+      submittedError,
+      submittedLoading,
       getOrdersByStatus,
       getOrderStatusClass,
       formatDate,
@@ -275,5 +334,20 @@ export default {
 .item-meta {
   font-size: 0.813rem;
   color: #64748b;
+}
+
+.submitted-orders {
+  margin-top: 1.5rem;
+}
+
+.submitted-empty {
+  padding: 1.5rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.so-item {
+  font-size: 0.875rem;
+  color: #0f172a;
 }
 </style>
